@@ -4,12 +4,15 @@ const db = require('../db');
 const { calculateDaysTillNextBirthDay } = require('../util/date');
 
 router.get('/',(req,res)=>{
-    db.messages.delete(1)
     res.json(db.messages.get())
 })
 
-router.get('/t',(req,res)=>{
+router.get('/test',(req,res)=>{
     res.json(calculateDaysTillNextBirthDay(req.body.date))
+})
+
+router.get('/:id',(req,res)=>{
+    res.json(db.messages.find(m=>m.id == req.params.id))
 })
 
 router.post('/',(req,res)=>{
