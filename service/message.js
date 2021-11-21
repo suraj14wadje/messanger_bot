@@ -1,11 +1,15 @@
 const axios = require('axios')
 
 const {messages:messageDb}  = require('../db')
+const { isUserExist, addNewUser } = require('./user')
 
 const processIncomingMessage = (message)=>{
-    //todo
+    const userId = message.sender.id;
+
     messageDb.push(message)
-    console.log(message)
+
+    if(!isUserExist(userId)) addNewUser(id)
+
     sendMessage(message.sender.id,{"text":"Hello!!"})
 }
 
@@ -33,5 +37,5 @@ const sendMessage = async (senderId, response)=>{
 
 module.exports = {
     processIncomingMessage,
-    callSendApi: sendMessage
+    sendMessage
 }

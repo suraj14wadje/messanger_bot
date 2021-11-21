@@ -1,4 +1,5 @@
 
 let messages=[]
+let users = []
 
-module.exports = { messages }
+module.exports = { messages,users }
