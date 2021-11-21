@@ -56,13 +56,12 @@ const processReply =async (user,currentMessage) =>{
     }
 
     userDb.update(user);
-    console.log(userDb.get());
 
 }
 
 
 const sendMessage = async (senderId, response)=>{
-    console.log("sendMessage Called ",senderId,response)
+    console.log("sendMessage Called with data : ",senderId,response)
 
     const request_body = {
         'recipient': {
@@ -78,7 +77,7 @@ const sendMessage = async (senderId, response)=>{
         })
 
     }catch(ex){
-        console.error(ex)
+        console.error("Error while sending message",ex.Error)
         return false;
     }
     return true;
