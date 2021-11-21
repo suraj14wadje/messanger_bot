@@ -1,5 +1,5 @@
 const axios = require('axios');
-const { parseDate, calculateDaysTillNextBirthDay } = require('../util/date');
+const {  calculateDaysTillNextBirthDay } = require('../util/date');
 
 const {messages:messageDb,users:userDb}  = require('../db')
 
@@ -7,6 +7,7 @@ const processIncomingMessage = async ({sender,message})=>{
     console.log("message received... from",sender," message : ",message)
     const userId = sender.id;
 
+    message.id = message.mid
     messageDb.push(message)
     let userFromDb = userDb.find(u=>u.id==userId);
 
