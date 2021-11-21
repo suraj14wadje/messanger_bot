@@ -8,6 +8,7 @@ const processIncomingMessage = async ({sender,message})=>{
     const userId = sender.id;
 
     message.id = message.mid
+    delete message.mid
     messageDb.push(message)
     let userFromDb = userDb.find(u=>u.id==userId);
 
