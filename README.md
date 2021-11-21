@@ -27,7 +27,7 @@
 
 7. put value of Verify_Token from .env file
 
-8. Your App is redy!
+8. Your App is ready!
 
 
 
