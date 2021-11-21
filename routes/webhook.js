@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const messageService = require('../service/message')
 
 
 router.post('/', (req, res) => {  
@@ -7,8 +8,9 @@ router.post('/', (req, res) => {
     if (body.object === 'page') {
 
       body.entry.forEach(function(entry) {
-        let webhook_event = entry.messaging[0];
-        console.log(webhook_event);
+          
+        const message = entry.messaging[0];
+        messageService.processIncomingMessage(message)
     });
   
       res.status(200).send('EVENT_RECEIVED');
