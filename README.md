@@ -2,8 +2,10 @@
 
 1. Copy your facebook Access Token and paste it in .env 
 
-        npm install
-        npm start
+
+2.      npm install
+
+3.      npm start
 
 2. Install ngrok 
     
