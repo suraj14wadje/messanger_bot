@@ -2,7 +2,11 @@ const mongoose = require('mongoose')
 
 
 const Message = new mongoose.Schema({
-    mId:String,
+    mid:{
+        type:String,
+        unique:true,
+        required:true
+    },
     text:String,
     user:{ 
         type : mongoose.Schema.Types.ObjectId,
