@@ -7,7 +7,7 @@
 
 3.      npm start
 
-2. Install ngrok 
+4. Install ngrok 
     
     a. on Linux
 
@@ -16,20 +16,28 @@
 
         npm install ngrok -g
     
-3.  copy url that starts with https from screen that will appear after entering below command
+5.  copy url that starts with https from screen that will appear after entering below command
 
         ngrok http 3000
 
 
-4. go to https://developers.facebook.com/ then login
+6. go to https://developers.facebook.com/ then login
 
-5. click on your app -> messenger settings
+7. click on your app -> messenger settings
 
-6. paste the url copied in step 3 into callback url 
+8. Paste the url copied in step 3 into callback url and append  <b>'/webhook'</b>  to it without quotes 
 
-7. put value of Verify_Token from .env file
+    Example:
+    
+    if copied url = https://d8fe-2409-4042-4e11-c69e-fe54-93de-691a-f4a2.ngrok.io
 
-8. Your App is ready!
+    then paste https://d8fe-2409-4042-4e11-c69e-fe54-93de-691a-f4a2.ngrok.io/webhook into callback url
+
+9. put value of Verify_Token from .env file into Verify Token box
+
+10. Click verify and save
+
+10. Your App is ready!
 
 
 
