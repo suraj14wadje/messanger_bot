@@ -1,27 +1,40 @@
 const router = require('express').Router();
+const Message = require('../model/Message')
 
-const db = require('../db');
 const { calculateDaysTillNextBirthDay } = require('../util/date');
 
-router.get('/',(req,res)=>{
-    res.json(db.messages.get())
+router.get('/',async(req,res)=>{
+    const messages = await Message.find();
+
+    res.json(messages)
 })
 
 router.get('/test',(req,res)=>{
     res.json(calculateDaysTillNextBirthDay(req.body.date))
 })
 
-router.get('/:id',(req,res)=>{
-    res.json(db.messages.find(m=>m.id == req.params.id))
+router.get('/:mid',async (req,res)=>{
+    const {mid} = req.params;
+    const message =await Message.findOne({mid})
+
+    res.json(message)
 })
 
-router.post('/',(req,res)=>{
-    db.messages.push(req.body)
-    res.sendStatus(200);
+router.post('/',async(req,res)=>{
+    const {mid,user,text} = req.body;
+    const message = await Message.create({
+        mid,
+        user,
+        text
+    })
+
+    res.json(message)
 })
 
-router.delete('/:id',(req,res)=>{
-    db.messages.delete(req.params.id)
+router.delete('/:mid',async (req,res)=>{
+    const { mid } = req.params;
+    await Message.deleteOne({mid})
+
     res.sendStatus(200);
 })
 

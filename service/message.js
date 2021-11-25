@@ -1,33 +1,38 @@
 const axios = require('axios');
 const {  calculateDaysTillNextBirthDay } = require('../util/date');
 
-const {messages:messageDb,users:userDb}  = require('../db')
+const Message = require('../model/Message')
+const User    = require('../model/User')
 
 const processIncomingMessage = async ({sender,message})=>{
     console.log("message received... from",sender," message : ",message)
-    const userId = sender.id;
+    const user = sender.id;
 
-    message.id = message.mid
-    delete message.mid
-    messageDb.push(message)
-    let userFromDb = userDb.find(u=>u.id==userId);
+    const {mid,text} = message;
+    
+    let userFromDb = await User.findOne({id:user})
+
 
     if(!userFromDb){
-        userFromDb = userDb.push({id:userId,state:'name'})
-        await sendMessage(userId,{"text":"Hello There !"})
-        await sendMessage(userId,{"text":"What is your name?"})
+        userFromDb = await User.create({id:user,state:'name'})
+
+        await sendMessage(user,{"text":"Hello There !"})
+        await sendMessage(user,{"text":"What is your name?"})
     }
     else{
-        processReply(userFromDb,message.text)
-
+        await processReply(userFromDb,message.text)
     }
+    await Message.create({
+        mid,
+        text,
+        user:userFromDb._id
+    })
 
 }
 
 
 const processReply =async (user,currentMessage) =>{
     let message = {text:''};
-    let state = ''
 
     if(user.state == 'name'){
         user.name = currentMessage;
@@ -57,7 +62,7 @@ const processReply =async (user,currentMessage) =>{
 
     }
 
-    userDb.update(user);
+    await user.save();
 
 }
 
@@ -79,7 +84,7 @@ const sendMessage = async (senderId, response)=>{
         })
 
     }catch(ex){
-        console.error("Error while sending message",ex.Error)
+        console.error("Error while sending message",ex)
         return false;
     }
     return true;
