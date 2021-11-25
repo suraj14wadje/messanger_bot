@@ -1,5 +1,5 @@
 const axios = require('axios');
-const {  calculateDaysTillNextBirthDay } = require('../util/date');
+const {  calculateDaysTillNextBirthDay,isValid } = require('../util/date');
 
 const Message = require('../model/Message')
 const User    = require('../model/User')
@@ -44,10 +44,16 @@ const processReply =async (user,currentMessage) =>{
         user.state = 'age';
     }
     else if(user.state == 'age'){
-        user.birthDate = currentMessage;
-        message.text = user.name + ", would you like to know how many days left for your next birthday ? "
+        
+        if(isValid(currentMessage)){ 
+            user.birthDate = currentMessage;
+            message.text = user.name + ", would you like to know how many days left for your next birthday ? "
+            user.state = 'ask'
+        }else{
+            message.text = "Invalid date, please enter it in YYYY-MM-DD format"
+        }
         sendMessage(user.id,message)
-        user.state = 'ask'
+        
     }
     else if(user.state == 'ask'){
         if(currentMessage.toLowerCase().trim().startsWith('y')){
