@@ -12,12 +12,16 @@ const processIncomingMessage = async ({sender,message})=>{
     
     let userFromDb = await User.findOne({id:user})
 
+    if(!userFromDb)
+        userFromDb = await User.create({id:user})
 
-    if(!userFromDb){
-        userFromDb = await User.create({id:user,state:'name'})
+    if(!userFromDb.state){
 
         await sendMessage(user,{"text":"Hello There !"})
         await sendMessage(user,{"text":"What is your name?"})
+        
+        userFromDb.state = 'name'
+        await userFromDb.save();
     }
     else{
         await processReply(userFromDb,message.text)
@@ -41,9 +45,9 @@ const processReply =async (user,currentMessage) =>{
         
         message.text = "What is your birth date ? please enter it in YYYY-MM-DD format :) ";
         await sendMessage(user.id,message);
-        user.state = 'age';
+        user.state = 'birthDate';
     }
-    else if(user.state == 'age'){
+    else if(user.state == 'birthDate'){
         
         if(isValid(currentMessage)){ 
             user.birthDate = currentMessage;
@@ -93,10 +97,10 @@ const sendMessage = async (senderId, response)=>{
         })
 
     }catch(ex){
-        console.error("Error while sending message",ex)
-        return false;
+        console.error("Error while sending message:",ex.message)
+        throw Error(ex)
     }
-    return true;
+    
    
 }
 
