@@ -10,7 +10,7 @@ function calculateDaysTillNextBirthDay(date){
     else year = currentDate.getFullYear();
 
 
-    return moment(`${month}-${day}-${year}`,'MM-DD-YYYY').diff(moment.now(),'days')
+    return moment(`${month}-${day}-${year}`,'MM-DD-YYYY').diff(moment().startOf('day'),'days')
 }
 
 function isValid(date){
