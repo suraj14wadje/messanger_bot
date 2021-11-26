@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "jest --coverage --detectOpenHandles --verbose --silent",
+    "test": "jest --detectOpenHandles --verbose --silent",
     "devStart": "nodemon index.js"
   },
   "author": "",
