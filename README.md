@@ -1,3 +1,14 @@
+## Testing setup
+
+1.      npm install
+
+2. inside config/test.json, change the value of dbUrl to your mongodb url
+
+3.      npm test
+
+4. Done!
+
+
 ## Steps to run
 
 1. Copy your facebook Access Token and paste it in .env 
