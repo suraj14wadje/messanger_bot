@@ -58,7 +58,10 @@ const processReply =async (user,currentMessage) =>{
     else if(user.state == 'ask'){
         if(currentMessage.toLowerCase().trim().startsWith('y')){
             const noOfDays = calculateDaysTillNextBirthDay(user.birthDate)
-            message.text = `${user.name}, there are only ${noOfDays} left for your next birthday`;
+            if(noOfDays == 0)
+                message.text = `Happy Birthday , ${user.name} !!!`
+            else
+                message.text = `${user.name}, there are only ${noOfDays} left for your next birthday`;
         }
         else message.text = `Goodbye 👋`
         sendMessage(user.id,message);
